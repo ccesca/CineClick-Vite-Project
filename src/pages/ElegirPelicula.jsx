@@ -1,22 +1,40 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 function ElegirPelicula(){
+    const [errorCompra, setErrorCompra] = useState(false);
+    const [sesionActiva, setSesionActiva] = useState(() => localStorage.getItem("usuario_ingresado") === "si");
+    const cerrarSesion = () => {
+      localStorage.removeItem("usuario_ingresado");
+      localStorage.removeItem("rol_usuario");
+      setSesionActiva(false);
+    };
+    const procesarCompra = (event) => {
+      event.preventDefault();
+      if (localStorage.getItem("usuario_ingresado") !== "si") {
+        setErrorCompra(true);
+      } else {
+        setErrorCompra(false);
+        window.alert("Procesando Compra");
+      }
+    };
     return(
 <>
 
     <div className="marco">
         <header className="navbar">
 
-            <a href="/index.html"><img className="logo" src="/imagenes/LOGO.png" alt="logo" width="100px"/></a>
+            <Link to="/"><img className="logo" src="/imagenes/LOGO.png" alt="logo" width="100px"/></Link>
 
             <div className="barra-titulo">
 
                 <p className="secciones">COMPRÁ TU ENTRADA</p>
 
-                <div className="cerrar_sesion" id="cerrar_sesion">
-                    <button type="button" className="boton_secundario btn_salir" onclick="cerrarSesion()">CERRAR SESIÓN</button>
+                <div className="cerrar_sesion" id="cerrar_sesion" style={{ display: sesionActiva ? "block" : "none" }}>
+                    <button type="button" className="boton_secundario btn_salir" onClick={cerrarSesion}>CERRAR SESIÓN</button>
                 </div>
 
                 <div className="cerrar">
-                    <a href="/index.html"><img src="/imagenes/salirCLARO.png" alt="volver" width="70px"/></a>
+                    <Link to="/"><img src="/imagenes/salirCLARO.png" alt="volver" width="70px"/></Link>
                 </div>
 
             </div>
@@ -29,14 +47,14 @@ function ElegirPelicula(){
 
         <div className="comprar_entrada">
 
-            <form className="form_comprar_entrada" id="form_comprar_entrada" action="">
+            <form className="form_comprar_entrada" id="form_comprar_entrada" onSubmit={procesarCompra}>
 
                 <div className="contenedor-fila-marcos">
 
                     <div className="marco form">
                         <p className="secciones">Estrenos</p>
-                        <select className="filtro" name="peliculas_disponibles" id="">
-                            <option className="secciones" value="" disabled selected hidden>Peliculas</option>
+                        <select defaultValue="" className="filtro" name="peliculas_disponibles">
+                            <option className="secciones" value="" disabled hidden>Peliculas</option>
                             <option className="secciones" value="spiderMan">SPIDERMAN BRAND NEW DAY</option>
                             <option className="secciones" value="odisea">LA ODISEA</option>
                             <option className="secciones" value="guerra_de_los_ultimos">LA GUERRA DE LOS ULTIMOS</option>
@@ -48,8 +66,8 @@ function ElegirPelicula(){
                         </select>
 
                         <p className="secciones">Reestrenos</p>
-                        <select className="filtro" name="peliculas_disponibles" id="">
-                            <option className="secciones" value="" disabled selected hidden>Peliculas</option>
+                        <select defaultValue="" className="filtro" name="peliculas_disponibles">
+                            <option className="secciones" value="" disabled hidden>Peliculas</option>
                             <option className="secciones" value="caroline">CAROLINE</option>
                             <option className="secciones" value="casper">CASPER & WENDY</option>
                             <option className="secciones" value="harryPotter">HARRY POTTER</option>
@@ -67,7 +85,7 @@ function ElegirPelicula(){
                         <p className="secciones">Fecha</p>
                         <div className="fecha_funcion">
                             <label className="radio-circular">
-                                <input type="radio" id="dia_hoy" name="fecha_cine" value="hoy" checked/>
+                                <input type="radio" id="dia_hoy" name="fecha_cine" value="hoy" defaultChecked/>
                                 <span className="circulo-neon"></span>
                                 <span className="info_pelicula">09-10-2026</span>
                             </label>
@@ -93,46 +111,46 @@ function ElegirPelicula(){
                     </div>
                     <div className="marco form">
                         <p className="secciones">Horario</p>
-                        <select className="filtro" name="formatos">
-                            <option className="secciones" value="" disabled selected hidden>Horario</option>
-                            <option className="secciones" value="">12:00</option>
-                            <option className="secciones" value="">14:00</option>
-                            <option className="secciones" value="">16:00</option>
-                            <option className="secciones" value="">18:00</option>
-                            <option className="secciones" value="">20:00</option>
-                            <option className="secciones" value="">22:00</option>
+                        <select defaultValue="" className="filtro" name="horario">
+                            <option className="secciones" value="" disabled hidden>Horario</option>
+                            <option className="secciones" value="12:00">12:00</option>
+                            <option className="secciones" value="14:00">14:00</option>
+                            <option className="secciones" value="16:00">16:00</option>
+                            <option className="secciones" value="18:00">18:00</option>
+                            <option className="secciones" value="20:00">20:00</option>
+                            <option className="secciones" value="22:00">22:00</option>
                         </select>
                         <p className="secciones">Formato</p>
-                        <select className="filtro" name="formatos">
-                            <option className="secciones" value="" disabled selected hidden>Formato</option>
-                            <option className="secciones" value="">2D</option>
-                            <option className="secciones" value="">3D</option>
+                        <select defaultValue="" className="filtro" name="formatos">
+                            <option className="secciones" value="" disabled hidden>Formato</option>
+                            <option className="secciones" value="2D">2D</option>
+                            <option className="secciones" value="3D">3D</option>
                         </select>
                     </div>
 
                     <div className="marco form">
                         <p className="secciones">Idioma</p>
-                        <select className="filtro" name="idioma">
-                            <option className="secciones" value="" disabled selected hidden>Idioma</option>
-                            <option className="secciones" value="">Castellano</option>
-                            <option className="secciones" value="">Subtitulada</option>
+                        <select defaultValue="" className="filtro" name="idioma">
+                            <option className="secciones" value="" disabled hidden>Idioma</option>
+                            <option className="secciones" value="Castellano">Castellano</option>
+                            <option className="secciones" value="Subtitulada">Subtitulada</option>
                         </select>
 
                         <p className="secciones">Cantidad de entradas</p>
-                        <select className="filtro" name="idioma">
-                            <option className="secciones" value="" disabled selected hidden>Cantidad</option>
-                            <option className="secciones" value="">1</option>
-                            <option className="secciones" value="">2</option>
-                            <option className="secciones" value="">3</option>
-                            <option className="secciones" value="">4</option>
+                        <select defaultValue="" className="filtro" name="cantidad">
+                            <option className="secciones" value="" disabled hidden>Cantidad</option>
+                            <option className="secciones" value="1">1</option>
+                            <option className="secciones" value="2">2</option>
+                            <option className="secciones" value="3">3</option>
+                            <option className="secciones" value="4">4</option>
 
                         </select>
                     </div>
 
                     <div className="marco form">
                         <p className="secciones">Cine</p>
-                        <select className="filtro" name="cine">
-                            <option className="secciones" value="" disabled selected hidden>Cines</option>
+                        <select defaultValue="" className="filtro" name="cine" required>
+                            <option className="secciones" value="" disabled hidden>Cines</option>
                             <option className="secciones" value="ABASTO">Abasto Shopping</option>
                             <option className="secciones" value="AltoAvellaneda">Alto Avellaneda</option>
                             <option className="secciones" value="nuevoCENTRO">Nuevo centro Shopping</option>
@@ -141,7 +159,7 @@ function ElegirPelicula(){
                             <option className="secciones" value="palermo">Palermo</option>
                         </select>
 
-                        <p className="ubicacion"><a href="/cines.html">¿No sabes que cine elegir?</a></p>
+                        <p className="ubicacion"><Link to="/cines">¿No sabes que cine elegir?</Link></p>
 
                     </div>
 
@@ -151,7 +169,7 @@ function ElegirPelicula(){
                     <button className="boton_secundario">Finalizar</button>
                 </div>
 
-                <div className="alerta-exito" id="mensaje_error_compra">
+                <div className="alerta-exito" id="mensaje_error_compra" style={{ display: errorCompra ? "block" : "none" }}>
                     <div className="marco">
                         <p className="secciones">Debe iniciar sesión para finalizar la compra.</p>
                     </div>
