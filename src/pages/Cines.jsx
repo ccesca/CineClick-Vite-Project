@@ -1,18 +1,19 @@
+import { Link } from "react-router-dom";
 function Cines(){
     return(
         <>
  <div className="marco">
     <header className="navbar">
 
-        <a href="/index.html"><img className="logo" src="/imagenes/LOGO.png" alt="logo" width="100px"/></a>
-
+        <Link to="/"><img className="logo" src="/imagenes/LOGO.png" alt="logo" width="100px"/></Link>
         <div className="barra-titulo">
 
             <p className="secciones">CINES</p>
             
 
             <div className="cerrar">
-                <a href="/index.html"><img src="/imagenes/salirCLARO.png" alt="volver" width="70px"/></a>
+
+                <Link to="/"><img src="/imagenes/salirCLARO.png" alt="volver" width="70px"/></Link>
             </div>
 
         </div>
